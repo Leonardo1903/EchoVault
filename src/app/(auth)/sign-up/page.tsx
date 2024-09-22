@@ -86,7 +86,6 @@ export default function Page() {
       });
 
       router.replace(`/verify/${username}`);
-      //will make this page later
 
       // router.push: Adds a new entry to the browser’s history.This means if the user navigates to a new page using router.push, they can press the back button to return to the previous page.
 
