@@ -3,6 +3,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { User } from "next-auth";
+// getServerSession thru this we can get session phir user and his propertes like _id. It needs authOptions
 
 export async function POST(request: Request) {
     await dbConnect();
