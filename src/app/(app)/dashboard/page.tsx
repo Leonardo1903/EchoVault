@@ -15,7 +15,6 @@ import { Loader2, RefreshCcw } from "lucide-react";
 import { MessageCard } from "@/components/MessageCard";
 import { User } from "next-auth";
 
-//the dashboard where copy link accet messages and messages card
 function Dashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -89,7 +88,6 @@ function Dashboard() {
     [setIsLoading, setMessages]
   );
 
-  //basically call the methods
   useEffect(() => {
     if (!session || !session.user) return;
     fetchMessages();
