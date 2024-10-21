@@ -1,6 +1,8 @@
-import { resend } from "@/lib/resend";
+// import { resend } from "@/lib/resend";
 import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
+import { render } from '@react-email/components';
+import nodemailer from 'nodemailer';
 
 export async function sendVerificationEmail(
     email: string,
@@ -8,21 +10,49 @@ export async function sendVerificationEmail(
     verifyCode: string
 ):Promise<ApiResponse> {
     try {
-        await resend.emails.send({
-            from: 'EchoVault <onboarding@resend.dev>',
+        // await resend.emails.send({
+        //     from: 'EchoVault <onboarding@resend.dev>',
+        //     to: email,
+        //     subject: 'Verify your email address',
+        //     react: VerificationEmail({ username, otp: verifyCode }),
+        //   });
+        // return {
+        //     success:true,
+        //     message:"Verification email sent"
+        // }
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // use TLS
+            auth: {
+                user: process.env.MY_EMAIL,
+                pass: process.env.MY_EMAIL_PASSWORD
+            }
+        });
+
+        const emailHtml = await render(VerificationEmail({ username, otp: verifyCode }));
+
+        
+        const options = {
+            from: process.env.MY_EMAIL,
             to: email,
-            subject: 'Verify your email address',
-            react: VerificationEmail({ username, otp: verifyCode }),
-          });
+            subject: "EchoVault OTP Verification | EchoVault",
+            html: emailHtml, // Ensure this is a resolved string
+        };
+
+        await transporter.sendMail(options);
+
+
         return {
-            success:true,
-            message:"Verification email sent"
-        }
+            success: true,
+            message: "Verification email sent successfully.",
+        };
     } catch (error) {
-        console.error("Error sending verification email",error);
+        console.error("Error sending verification email", error);
         return {
-            success:false,
-            message:"Error sending verification email"
-        }
+            success: false,
+            message: "Error sending verification email",
+        };
     }
 }
