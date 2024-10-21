@@ -24,10 +24,10 @@ export async function sendVerificationEmail(
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
-            secure: false, // use TLS
+            secure: false,
             auth: {
                 user: process.env.MY_EMAIL,
-                pass: process.env.MY_EMAIL_PASSWORD
+                pass: process.env.MY_PASS,
             }
         });
 
@@ -38,7 +38,7 @@ export async function sendVerificationEmail(
             from: process.env.MY_EMAIL,
             to: email,
             subject: "EchoVault OTP Verification | EchoVault",
-            html: emailHtml, // Ensure this is a resolved string
+            html: emailHtml,
         };
 
         await transporter.sendMail(options);
