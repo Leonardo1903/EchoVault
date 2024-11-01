@@ -5,23 +5,48 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import { User } from "next-auth";
+import { MessageSquare } from "lucide-react";
 
 function Navbar() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
 
   return (
-    <nav className="p-4 md:p-6 shadow-md bg-gray-900 text-white">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <a href="#" className="text-xl font-bold mb-4 md:mb-0">
-          EchoVault
-        </a>
+    <header className="px-4 lg:px-6 h-16 flex items-center border-b bg-gray-800 text-white border-gray-800">
+      <Link className="flex items-center justify-center" href="#">
+        <MessageSquare className="h-6 w-6 mr-2 text-teal-400" />
+        <span className="font-bold text-xl">Echovault</span>
+      </Link>
+      <nav className="ml-auto flex gap-4 sm:gap-6">
+        <Link
+          className="text-sm font-medium hover:text-teal-400"
+          href="#features"
+        >
+          Features
+        </Link>
+        <Link
+          className="text-sm font-medium hover:text-teal-400"
+          href="#how-it-works"
+        >
+          How It Works
+        </Link>
+        <Link
+          className="text-sm font-medium hover:text-teal-400"
+          href="#testimonials"
+        >
+          Testimonials
+        </Link>
+        <Link className="text-sm font-medium hover:text-teal-400" href="#faq">
+          FAQ
+        </Link>
+      </nav>
+      <div className="ml-4 flex items-center gap-2">
         {session ? (
           <>
             <span className="mr-4">Welcome, {user.username || user.email}</span>
             <Button
               onClick={() => signOut()}
-              className="w-full md:w-auto bg-slate-100 text-black"
+              className="bg-teal-600 text-white hover:bg-teal-700"
               variant="outline"
             >
               Logout
@@ -30,15 +55,15 @@ function Navbar() {
         ) : (
           <Link href="/sign-in">
             <Button
-              className="w-full md:w-auto bg-slate-100 text-black"
-              variant={"outline"}
+              variant="default"
+              className="bg-teal-600 text-white hover:bg-teal-700"
             >
-              Login
+              Log in
             </Button>
           </Link>
         )}
       </div>
-    </nav>
+    </header>
   );
 }
 
