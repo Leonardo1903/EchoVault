@@ -22,7 +22,6 @@ function Dashboard() {
 
   const { toast } = useToast();
 
-  //optimistic ui updates==> only ui updates while doing these actions . Server side is seen afterwards but ui is just updated for user friendly
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
@@ -35,15 +34,13 @@ function Dashboard() {
 
   const { register, watch, setValue } = form;
 
-  const acceptMessages = watch("accepMessages");
+  const acceptMessages = watch("acceptMessages");
 
-  //get the status whether the field is on or off
   const fetchAcceptMessage = useCallback(async () => {
     setIsSwitchLoading(true);
     try {
       const response = await axios.get<ApiResponse>("/api/accept-messages");
-
-      setValue("accepMessages", response.data.isAcceptingMessages);
+      setValue("acceptMessages", response.data.isAcceptingMessages);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
@@ -56,9 +53,8 @@ function Dashboard() {
     } finally {
       setIsSwitchLoading(false);
     }
-  }, [setValue]);
+  }, [setValue, toast]);
 
-  //get all the message
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
       setIsLoading(true);
@@ -85,7 +81,7 @@ function Dashboard() {
         setIsSwitchLoading(false);
       }
     },
-    [setIsLoading, setMessages]
+    [setIsLoading, setMessages, toast]
   );
 
   useEffect(() => {
@@ -94,13 +90,12 @@ function Dashboard() {
     fetchAcceptMessage();
   }, [session, setValue, fetchAcceptMessage, fetchMessages]);
 
-  //handle switch
   const handleSwitchChange = async () => {
     try {
       const response = await axios.post("/api/accept-messages", {
         acceptMessages: !acceptMessages,
       });
-      setValue("accepMessages", !acceptMessages);
+      setValue("acceptMessages", !acceptMessages);
       toast({
         title: response.data.message,
         variant: "default",
@@ -117,12 +112,13 @@ function Dashboard() {
   };
 
   if (!session || !session.user) {
-    return <div>Please Login</div>;
+    return <div className="text-center text-gray-300 mt-8">Please Login</div>;
   }
+
   const { username } = session.user as User;
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
-  //todo: find better ways
+
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(profileUrl);
     toast({
@@ -132,55 +128,67 @@ function Dashboard() {
   };
 
   return (
-    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 rounded w-full max-w-6xl  border-gray-300">
-      <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
-      <Separator className="my-4" />
+    <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
+      <h1 className="text-4xl font-bold mb-4 text-center">
+        Welcome, {username}
+      </h1>
+      <Separator className="my-6 border-gray-700" />
 
-      <div className="mb-4 p-4 rounded bg-white">
-        <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>
-        <div className="flex items-center">
-          <input
-            type="text"
-            value={profileUrl}
-            disabled
-            className="input input-bordered w-full p-2 mr-2 border border-gray-300 rounded"
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full">
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-4">Your Unique Link</h2>
+          <div className="flex items-center bg-gray-700 p-2 rounded-lg">
+            <input
+              type="text"
+              value={profileUrl}
+              disabled
+              className="w-full p-2 bg-transparent text-gray-300 outline-none"
+            />
+            <Button
+              onClick={copyToClipboard}
+              className="ml-2 bg-teal-600 hover:bg-teal-700"
+            >
+              Copy
+            </Button>
+          </div>
+        </div>
+
+        <div className="mb-6 flex items-center">
+          <Switch
+            {...register("acceptMessages")}
+            checked={acceptMessages}
+            onCheckedChange={handleSwitchChange}
+            disabled={isSwitchLoading}
+            className="bg-teal-600"
           />
-          <Button className="border border-gray-500" onClick={copyToClipboard}>
-            Copy
+          <span className="ml-3 text-lg">
+            Accept Messages:{" "}
+            <span
+              className={acceptMessages ? "text-teal-400" : "text-gray-400"}
+            >
+              {acceptMessages ? "On" : "Off"}
+            </span>
+          </span>
+        </div>
+
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold">Messages</h2>
+          <Button
+            onClick={() => fetchMessages(true)}
+            variant="outline"
+            className="text-gray-100 border border-gray-500 bg-gray-800"
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin h-4 w-4" />
+            ) : (
+              <RefreshCcw className="h-4 w-4" />
+            )}
           </Button>
         </div>
-      </div>
 
-      <div className="mb-4 p-4  rounded bg-white">
-        <Switch
-          {...register("acceptMessages")}
-          checked={acceptMessages}
-          onCheckedChange={handleSwitchChange}
-          disabled={isSwitchLoading}
-        />
-        <span className="ml-2">
-          Accept Messages: {acceptMessages ? "On" : "Off"}
-        </span>
-      </div>
-      <div className="border p-2">
-        <Button
-          className="mt-4 border border-gray-300"
-          variant="outline"
-          onClick={(e) => {
-            e.preventDefault();
-            fetchMessages(true);
-          }}
-        >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <RefreshCcw className="h-4 w-4 text-black" />
-          )}
-        </Button>
-
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
+            messages.map((message) => (
               <MessageCard
                 key={message._id as string}
                 message={message}
@@ -188,7 +196,9 @@ function Dashboard() {
               />
             ))
           ) : (
-            <p className="text-gray-600">No messages to display.</p>
+            <p className="text-center text-gray-500 col-span-full">
+              No messages to display.
+            </p>
           )}
         </div>
       </div>
