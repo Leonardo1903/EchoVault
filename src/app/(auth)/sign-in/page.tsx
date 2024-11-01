@@ -59,13 +59,15 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <h1 className="text-4xl font-extrabold text-gray-100 tracking-tight lg:text-5xl mb-6">
             Welcome Back to EchoVault
           </h1>
-          <p className="mb-4">Sign in to continue your secret conversations</p>
+          <p className="mb-4 text-gray-300">
+            Sign in to continue your secret conversations
+          </p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -74,8 +76,13 @@ export default function SignInForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email/Username</FormLabel>
-                  <Input {...field} />
+                  <FormLabel className="text-gray-300">
+                    Email/Username
+                  </FormLabel>
+                  <Input
+                    {...field}
+                    className="bg-gray-700 text-gray-100 placeholder-gray-400"
+                  />
                   <FormMessage />
                 </FormItem>
               )}
@@ -85,21 +92,31 @@ export default function SignInForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" {...field} />
+                  <FormLabel className="text-gray-300">Password</FormLabel>
+                  <Input
+                    type="password"
+                    {...field}
+                    className="bg-gray-700 text-gray-100 placeholder-gray-400"
+                  />
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" type="submit">
+            <Button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white"
+            >
               Sign In
             </Button>
           </form>
         </Form>
         <div className="text-center mt-4">
-          <p>
+          <p className="text-gray-300">
             Not a member yet?{" "}
-            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
+            <Link
+              href="/sign-up"
+              className="text-indigo-400 hover:text-indigo-300"
+            >
               Sign up
             </Link>
           </p>

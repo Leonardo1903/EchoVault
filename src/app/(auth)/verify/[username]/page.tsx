@@ -45,20 +45,23 @@ export default function Page() {
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message;
       toast({
-        title: "An error occured",
+        title: "An error occurred",
         description: errorMessage,
         variant: "destructive",
       });
     }
   };
+
   return (
-    <div className="flex justify-center items-center max-h-screen bg-gray-800 min-h-screen">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center max-h-screen bg-gray-900 min-h-screen">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <h1 className="text-4xl font-extrabold text-gray-100 tracking-tight lg:text-5xl mb-6">
             Verify Your Account
           </h1>
-          <p className="mb-4">Enter the verification code sent to your email</p>
+          <p className="mb-4 text-gray-300">
+            Enter the verification code sent to your email
+          </p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -67,15 +70,26 @@ export default function Page() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Verification Code</FormLabel>
+                  <FormLabel className="text-gray-300">
+                    Verification Code
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="code" {...field} />
+                    <Input
+                      placeholder="Enter code"
+                      {...field}
+                      className="bg-gray-700 text-gray-100 placeholder-gray-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button
+              type="submit"
+              className="bg-indigo-600 hover:bg-indigo-500 text-white w-full"
+            >
+              Submit
+            </Button>
           </form>
         </Form>
       </div>

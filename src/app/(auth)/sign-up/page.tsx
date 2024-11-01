@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 import axios, { AxiosError } from "axios";
-import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
+import { useDebounceCallback } from "usehooks-ts";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signUpSchema";
@@ -25,21 +25,10 @@ import { Loader2 } from "lucide-react";
 export default function Page() {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
-  //a message whether username is available  or not
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
-  //basicaly a loader
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //the request is sent in the backend after each letter entered in the input field
-  //we will use debounce to have delay and use debounce value to request from backend
-
   const debounced = useDebounceCallback(setUsername, 300);
-  // useDebouncedValue:
-  // Debounces a value.
-  // Used when you want to delay updating or using a value.
-  // useDebouncedCallback:
-  // Debounces a function.
-  // Used when you want to delay invoking a function.
   const { toast } = useToast();
   const router = useRouter();
 
@@ -66,7 +55,7 @@ export default function Page() {
           const axiosError = error as AxiosError<ApiResponse>;
           setUsernameMessage(
             axiosError.response?.data.message ??
-              "An error occured while checking username"
+              "An error occurred while checking username"
           );
         } finally {
           setIsCheckingUsername(false);
@@ -84,17 +73,12 @@ export default function Page() {
         title: "Account created",
         description: response.data.message,
       });
-
       router.replace(`/verify/${username}`);
-
-      // router.push: Adds a new entry to the browser’s history.This means if the user navigates to a new page using router.push, they can press the back button to return to the previous page.
-
-      //router.replace: Replaces the current entry in the browser’s history.After navigating with router.replace, pressing the back button will skip the current page and take the user to the page before the one that was replaced.
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message;
       toast({
-        title: "An error occured",
+        title: "An error occurred",
         description: errorMessage,
         variant: "destructive",
       });
@@ -102,14 +86,17 @@ export default function Page() {
       setIsSubmitting(false);
     }
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <h1 className="text-4xl font-extrabold text-gray-100 tracking-tight lg:text-5xl mb-6">
             Join EchoVault
           </h1>
-          <p className="mb-4">Sign up to start your anonymous adventure</p>
+          <p className="mb-4 text-gray-300">
+            Sign up to start your anonymous adventure
+          </p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -118,7 +105,7 @@ export default function Page() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-gray-300">Username</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="username"
@@ -127,9 +114,12 @@ export default function Page() {
                         field.onChange(e);
                         debounced(e.target.value);
                       }}
+                      className="bg-gray-700 text-gray-100 placeholder-gray-400"
                     />
                   </FormControl>
-                  {isCheckingUsername && <Loader2 className="animate-spin" />}
+                  {isCheckingUsername && (
+                    <Loader2 className="animate-spin text-indigo-500" />
+                  )}
                   {!isCheckingUsername && usernameMessage && (
                     <p
                       className={`text-sm ${
@@ -150,9 +140,13 @@ export default function Page() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-gray-300">Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input
+                      placeholder="email"
+                      {...field}
+                      className="bg-gray-700 text-gray-100 placeholder-gray-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,17 +157,25 @@ export default function Page() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-gray-300">Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="pssword" {...field} />
+                    <Input
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                      className="bg-gray-700 text-gray-100 placeholder-gray-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white"
+            >
               {isSubmitting ? (
-                //if isCheckingUsername is true then show a loader else show signup
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Please wait
@@ -185,9 +187,12 @@ export default function Page() {
           </form>
         </Form>
         <div className="text-center mt-4">
-          <p>
+          <p className="text-gray-300">
             Already a member?{" "}
-            <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
+            <Link
+              href="/sign-in"
+              className="text-indigo-400 hover:text-indigo-300"
+            >
               Sign in
             </Link>
           </p>
