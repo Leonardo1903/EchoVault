@@ -19,7 +19,7 @@ An anonymous feedback platform with AI suggested messages
 **Server:** NextJS, MongoDB 
 
 
-## Lessons Learned
+## Key Learnings
 
 - Integration of Next-Auth
 - Integrating Gemini for AI suggestions
