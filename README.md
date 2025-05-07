@@ -21,8 +21,10 @@ An anonymous feedback platform with AI suggested messages
 
 ## Key Learnings
 
-- Integration of Next-Auth
-- Integrating Gemini for AI suggestions
+- Building a full-stack application with Next.js and MongoDB.
+- Creating a responsive and accessible UI with TailwindCSS and ShadCN-UI.
+- Integration of NextAuth for secure authentication.
+- Implementation of Google Generative AI for AI-powered suggestions.
 
 
 ## Run Locally
