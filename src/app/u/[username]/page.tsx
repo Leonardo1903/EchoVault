@@ -167,7 +167,7 @@ export default function SendMessage() {
                   <Button
                     key={index}
                     variant="outline"
-                    className="w-full bg-gray-700 hover:bg-gray-600 text-gray-300"
+                    className="w-full bg-gray-700 hover:bg-gray-600 text-gray-300 p-4 text-left break-words overflow-wrap break-word whitespace-normal"
                     onClick={() => handleMessageClick(message)}
                   >
                     {message}
