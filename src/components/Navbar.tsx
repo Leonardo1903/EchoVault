@@ -21,25 +21,25 @@ function Navbar() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="#features"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="text-sm text-gray-400 hover:text-purple-600 transition-colors"
           >
             Features
           </Link>
           <Link
             href="#how-it-works"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="text-sm text-gray-400 hover:text-purple-600 transition-colors"
           >
             How It Works
           </Link>
           <Link
             href="#testimonials"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="text-sm text-gray-400 hover:text-purple-600 transition-colors"
           >
             Testimonials
           </Link>
           <Link
             href="#faq"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="text-sm text-gray-400 hover:text-purple-600 transition-colors"
           >
             FAQ
           </Link>
@@ -49,7 +49,6 @@ function Navbar() {
             <Button
               onClick={() => signOut()}
               className="bg-purple-600 hover:bg-purple-700 text-white"
-              variant="outline"
             >
               Logout
             </Button>
@@ -57,7 +56,7 @@ function Navbar() {
             <>
               <Link
                 href="/sign-in"
-                className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block"
+                className="text-sm text-gray-400 hover:text-purple-600 transition-colors hidden md:block"
               >
                 Log in
               </Link>

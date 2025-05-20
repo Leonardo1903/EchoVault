@@ -45,9 +45,8 @@ export default function Hero() {
             </Link>
             <Link href="#how-it-works" className="w-full sm:w-auto">
               <Button
-                variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-gray-800 text-white hover:bg-gray-900"
+                className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white"
               >
                 See How It Works
               </Button>

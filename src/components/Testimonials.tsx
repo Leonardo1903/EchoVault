@@ -71,7 +71,7 @@ export default function Testimonials() {
                     {testimonial.avatar}
                   </div>
                   <div>
-                    <p className="font-semibold">{testimonial.name}</p>
+                    <p className="font-semibold text-white">{testimonial.name}</p>
                     <p className="text-sm text-gray-400">
                       {testimonial.role}
                     </p>

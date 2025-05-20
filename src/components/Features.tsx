@@ -5,7 +5,7 @@ import {
   Zap,
   Lock,
   UserCheck,
-  MessageSquare,
+  Brain,
   Sparkles,
 } from "lucide-react";
 
@@ -34,11 +34,12 @@ export default function Features() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card className="bg-gray-900/50 border-gray-800 overflow-hidden group relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-5">
                 <Shield className="h-6 w-6 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Complete Anonymity</h3>
+              <h3 className="text-xl font-bold mb-2 text-white">Complete Anonymity</h3>
               <p className="text-gray-400">
                 Our platform ensures that feedback remains completely anonymous,
                 creating a safe space for honest communication without fear of
@@ -47,11 +48,12 @@ export default function Features() {
             </CardContent>
           </Card>
           <Card className="bg-gray-900/50 border-gray-800 overflow-hidden group relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
                 <Zap className="h-6 w-6 text-blue-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">AI-Powered Insights</h3>
+              <h3 className="text-xl font-bold mb-2 text-white">AI-Powered Insights</h3>
               <p className="text-gray-400">
                 Leverage Google&apos;s Generative AI to analyze feedback
                 patterns and provide actionable insights for continuous
@@ -60,11 +62,12 @@ export default function Features() {
             </CardContent>
           </Card>
           <Card className="bg-gray-900/50 border-gray-800 overflow-hidden group relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-lg bg-pink-500/10 flex items-center justify-center mb-5">
                 <Lock className="h-6 w-6 text-pink-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Enterprise Security</h3>
+              <h3 className="text-xl font-bold mb-2 text-white">Enterprise Security</h3>
               <p className="text-gray-400">
                 Built with state-of-the-art security measures to protect your
                 data and maintain confidentiality at all times.
@@ -74,11 +77,12 @@ export default function Features() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           <Card className="bg-gray-900/50 border-gray-800 overflow-hidden group relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-5">
                 <UserCheck className="h-6 w-6 text-green-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Personalized Dashboard</h3>
+              <h3 className="text-xl font-bold mb-2 text-white">Personalized Dashboard</h3>
               <p className="text-gray-400">
                 Access a user-friendly dashboard to manage your messages,
                 settings, and view feedback in a structured format.
@@ -86,11 +90,12 @@ export default function Features() {
             </CardContent>
           </Card>
           <Card className="bg-gray-900/50 border-gray-800 overflow-hidden group relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-5">
-                <MessageSquare className="h-6 w-6 text-orange-400" />
+                <Brain className="h-6 w-6 text-orange-400" />
               </div>
-              <h3 className="text-xl font-bold mb-2">AI Message Suggestions</h3>
+              <h3 className="text-xl font-bold mb-2 text-white">AI Message Suggestions</h3>
               <p className="text-gray-400">
                 Get AI-generated message suggestions to help you provide
                 constructive and meaningful feedback.

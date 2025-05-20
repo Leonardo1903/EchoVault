@@ -43,11 +43,10 @@ export default function CTA() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/demo" className="w-full sm:w-auto">
+            <Link href="#" className="w-full sm:w-auto">
               <Button
-                variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-gray-700 text-white hover:bg-gray-900"
+                className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white "
               >
                 Request a Demo
               </Button>
