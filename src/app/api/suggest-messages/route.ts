@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   try {
     const result = streamText({
       model: google("gemini-1.5-flash"),
-      prompt: "Give me any three random open ended questions. Each question must be separated by '||'. Make sure the Questions dont repeat and are unique each time ",
+      prompt: "Give me any four random open ended questions. Each question must be separated by '||'. Make sure the Questions dont repeat and are unique each time ",
     })
     
 
