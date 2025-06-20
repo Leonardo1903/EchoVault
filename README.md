@@ -77,7 +77,8 @@ Public Profile Page:
 ![Public Profile Page](https://github.com/user-attachments/assets/1bc863d2-f9b6-48ed-9dcd-3bac457d5464)
 
 ## Demo
-https://echovault.leonardo1903.me/
+
+[Live Demo](https://echovault.leonardo1903.me/)
 
 ## License
 
