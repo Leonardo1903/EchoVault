@@ -70,15 +70,14 @@ To run this project, you will need to add the following environment variables to
 ## Screenshots
 
 Landing Page:
-![Landing Page](https://github.com/user-attachments/assets/b614e849-f420-46fd-92c7-797d5af78622)
+![Landing Page](https://github.com/user-attachments/assets/6577536a-5507-4743-bc3b-35b89c46d78f)
 DashBoard:
-![Dashboard](https://github.com/user-attachments/assets/6297f336-dd5c-4dd6-a21a-47199a18f1c0)
-
+![Dashboard](https://github.com/user-attachments/assets/0f728ec4-4081-48af-a11d-185c59de6b8f)
+Public Profile Page:
+![Public Profile Page](https://github.com/user-attachments/assets/1bc863d2-f9b6-48ed-9dcd-3bac457d5464)
 
 ## Demo
-
-https://echo-vault.vercel.app/
-
+https://echovault.leonardo1903.me/
 
 ## License
 
