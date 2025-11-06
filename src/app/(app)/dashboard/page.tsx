@@ -72,7 +72,13 @@ export default function Dashboard() {
       try {
         const response = await axios.get("/api/get-messages");
         setMessages(response.data.messages || []);
-        if (refresh) {
+        if (response.data.messages.length === 0) {
+          toast({
+            title: "No Messages",
+            description: "No messages present",
+            variant: "default",
+          });
+        } else if (refresh) {
           toast({
             title: "Messages Refreshed",
             description: "Showing latest messages",

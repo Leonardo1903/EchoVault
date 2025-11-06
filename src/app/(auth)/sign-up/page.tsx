@@ -14,13 +14,15 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { ArrowRight, CheckCircle2, Loader2, Shield, Sparkles, X } from "lucide-react"
+import { ArrowRight, CheckCircle2, Loader2, Shield, Sparkles, X, Eye, EyeOff } from "lucide-react"
 
 export default function Page() {
   const [username, setUsername] = useState("")
   const [usernameMessage, setUsernameMessage] = useState("")
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const debounced = useDebounceCallback(setUsername, 300)
   const { toast } = useToast()
@@ -56,6 +58,19 @@ export default function Page() {
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true)
+
+    // confirm password validation (client-side)
+    const confirmPassword = form.getValues("confirmPassword" as any)
+    if (data.password !== confirmPassword) {
+      toast({
+        title: "Password mismatch",
+        description: "Password and confirmation do not match.",
+        variant: "destructive",
+      })
+      setIsSubmitting(false)
+      return
+    }
+
     try {
       const response = await axios.post<ApiResponse>("/api/sign-up", data)
       toast({
@@ -173,17 +188,50 @@ export default function Page() {
                     <FormItem>
                       <FormLabel className="text-gray-300">Password</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Create a secure password"
-                          type="password"
-                          {...field}
-                          className="bg-gray-800/80 border-gray-700 text-gray-100 placeholder-gray-500 focus:border-purple-500 focus:ring-purple-500"
-                        />
+                        <div className="relative">
+                          <Input
+                            placeholder="Create a secure password"
+                            type={showPassword ? "text" : "password"}
+                            {...field}
+                            className="bg-gray-800/80 border-gray-700 text-gray-100 placeholder-gray-500 focus:border-purple-500 focus:ring-purple-500 pr-10"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword((s) => !s)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                            aria-label={showPassword ? "Hide password" : "Show password"}
+                          >
+                            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          </button>
+                        </div>
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
+
+                {/* Confirm password (registered manually to avoid changing schema here) */}
+                <FormItem>
+                  <FormLabel className="text-gray-300">Confirm Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        placeholder="Confirm your password"
+                        type={showConfirmPassword ? "text" : "password"}
+                        {...form.register("confirmPassword" as any)}
+                        className="bg-gray-800/80 border-gray-700 text-gray-100 placeholder-gray-500 focus:border-purple-500 focus:ring-purple-500 pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword((s) => !s)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                        aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                      >
+                        {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                  </FormControl>
+                </FormItem>
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}

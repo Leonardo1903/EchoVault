@@ -1,8 +1,6 @@
-// import { resend } from "@/lib/resend";
+import { resend } from "@/lib/resend";
 import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
-import { render } from '@react-email/components';
-import nodemailer from 'nodemailer';
 
 export async function sendVerificationEmail(
     email: string,
@@ -10,44 +8,16 @@ export async function sendVerificationEmail(
     verifyCode: string
 ):Promise<ApiResponse> {
     try {
-        // await resend.emails.send({
-        //     from: 'EchoVault <onboarding@resend.dev>',
-        //     to: email,
-        //     subject: 'Verify your email address',
-        //     react: VerificationEmail({ username, otp: verifyCode }),
-        //   });
-        // return {
-        //     success:true,
-        //     message:"Verification email sent"
-        // }
-
-        const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false,
-            auth: {
-                user: process.env.MY_EMAIL,
-                pass: process.env.MY_PASS,
-            }
-        });
-
-        const emailHtml = await render(VerificationEmail({ username, otp: verifyCode }));
-
-        
-        const options = {
-            from: process.env.MY_EMAIL,
+        await resend.emails.send({
+            from: 'EchoVault <no-reply@echovault.leonardo1903.me>',
             to: email,
-            subject: "EchoVault OTP Verification | EchoVault",
-            html: emailHtml,
-        };
-
-        await transporter.sendMail(options);
-
-
+            subject: 'Verify your email address',
+            react: VerificationEmail({ username, otp: verifyCode }),
+          });
         return {
-            success: true,
-            message: "Verification email sent successfully.",
-        };
+            success:true,
+            message:"Verification email sent"
+        }
     } catch (error) {
         console.error("Error sending verification email", error);
         return {
