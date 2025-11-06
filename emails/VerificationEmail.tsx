@@ -18,8 +18,7 @@ export default function VerificationEmail({
   username,
   otp,
 }: VerificationEmailProps) {
-  const APP_URL =
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://echovault.leonardo1903.me";
+  const APP_URL = process.env.APP_URL;
   const verifyUrl = `${APP_URL}/verify/${encodeURIComponent(username)}`;
 
   const styles = {
